@@ -112,13 +112,15 @@ Hint: Investigate your data to find "team initials"!
 Hint: use `.reduce` */
 
 function getCountryWins(matchData, teamInitials) {
-    const countryWins = matchData.reduce(function(acc, game) {
-        if (game["Home Team Goals"] > game["Away Team Goals"] && game["Home Team Initials"] === teamInitials) {
-            acc++;
-        } else if (game["Away Team Goals"] > game["Home Team Goals"] && game["Away Team Initials"] === teamInitials) {
-            acc++;
+    const countryWins = matchData.reduce(function (wins, game) {
+        if (game.Stage === "Final") {
+            if (game["Home Team Goals"] > game["Away Team Goals"] && game["Home Team Initials"] === teamInitials) {
+                wins += 1;
+            } else if (game["Away Team Goals"] > game["Home Team Goals"] && game["Away Team Initials"] === teamInitials) {
+                wins += 1;
+            }
         }
-        return acc;
+        return wins;
     }, 0);
     return countryWins;
 }
