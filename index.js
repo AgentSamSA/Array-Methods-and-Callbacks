@@ -96,10 +96,9 @@ console.log(getWinnersByYear(getWinners(getFinals(fifaData)), getYears(getFinals
 /* Task 6: Write a function called `getAverageGoals` that accepts a parameter `data` and returns the the average number of home team goals and away team goals scored per match (Hint: use .reduce and do this in 2 steps) */
 
 function getAverageGoals(matchData) {
-    let averageGoals = matchData.reduce(function (sum, games) {
-        return sum + (games["Home Team Goals"] + games["Away Team Goals"]);
-    }, 0) / matchData.length;
-    return Math.round(averageGoals);
+    let averageGoals = matchData.reduce((sum, games) =>
+    sum + (games["Home Team Goals"] + games["Away Team Goals"]), 0) / matchData.length;
+    return (averageGoals);
 }
 
 console.log(getAverageGoals(fifaData));
@@ -112,7 +111,7 @@ Hint: Investigate your data to find "team initials"!
 Hint: use `.reduce` */
 
 function getCountryWins(matchData, teamInitials) {
-    const countryWins = matchData.reduce(function (wins, game) {
+    const countryWins = matchData.reduce((wins, game) => {
         if (game.Stage === "Final") {
             if (game["Home Team Goals"] > game["Away Team Goals"] && game["Home Team Initials"] === teamInitials) {
                 wins += 1;
@@ -120,8 +119,7 @@ function getCountryWins(matchData, teamInitials) {
                 wins += 1;
             }
         }
-        return wins;
-    }, 0);
+        return wins;}, 0);
     return countryWins;
 }
 
@@ -137,7 +135,7 @@ function getGoals(matchData) {
     // })
 }
 
-console.log(getGoals(fifaData));
+getGoals();
 
 
 /* Stretch 4: Write a function called badDefense() that accepts a parameter `data` and calculates the team with the most goals scored against them per appearance (average goals against) in the World Cup finals */
