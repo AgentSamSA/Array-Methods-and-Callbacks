@@ -111,36 +111,16 @@ console.log(getAverageGoals(fifaData));
 Hint: Investigate your data to find "team initials"!
 Hint: use `.reduce` */
 
-function getWinnersByInitial(getFinalsCallback) {
-    const finalsData = getFinalsCallback;
-    const finalsWinnersByInitials = finalsData.map(function (finalsGames) {
-        let homeTeamGoals = finalsGames["Home Team Goals"];
-        let awayTeamGoals = finalsGames["Away Team Goals"];
-        let homeTeamInitials = finalsGames["Home Team Initials"];
-        let awayTeamInitials = finalsGames["Away Team Initials"];
-        let winningGoals = Math.max(homeTeamGoals, awayTeamGoals);
-        if (homeTeamGoals === awayTeamGoals) {
-            if (finalsGames["Win conditions"].includes(finalsGames["Home Team Name"])) {
-                return homeTeamInitials;
-            } else {
-                return awayTeamInitials;
-            }
-        } else if (homeTeamGoals === winningGoals) {
-            return homeTeamInitials;
-        } else {
-            return awayTeamInitials;
-        }
-    });
-    return finalsWinnersByInitials;
-}
-console.log(getWinnersByInitial(getFinals(fifaData)));
-
 function getCountryWins(matchData, teamInitials) {
-    const winners = getWinnersByInitial(getFinals(matchData));
-    const oneWinner = winners.filter(function(team) {
-        return team === teamInitials;
-    });
-    return oneWinner.length;
+    const countryWins = matchData.reduce(function(acc, game) {
+        if (game["Home Team Goals"] > game["Away Team Goals"] && game["Home Team Initials"] === teamInitials) {
+            acc++;
+        } else if (game["Away Team Goals"] > game["Home Team Goals"] && game["Away Team Initials"] === teamInitials) {
+            acc++;
+        }
+        return acc;
+    }, 0);
+    return countryWins;
 }
 
 console.log(getCountryWins(fifaData, "BRA"));
@@ -149,6 +129,10 @@ console.log(getCountryWins(fifaData, "BRA"));
 /* Stretch 3: Write a function called getGoals() that accepts a parameter `data` and returns the team with the most goals score per appearance (average goals for) in the World Cup finals */
 
 function getGoals(matchData) {
+    // const finalsData = getFinals(matchData);
+    // const mostGoals = finalsData.reduce(function (most, game) {
+    //     return (most["Home"])
+    // })
 }
 
 console.log(getGoals(fifaData));
